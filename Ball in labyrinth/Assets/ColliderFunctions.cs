@@ -17,7 +17,7 @@ public class ColliderFunctions : MonoBehaviour {
 	}
 
 	IEnumerator Espere(){
-		yield return new WaitForSeconds (2.5f);
+		yield return new WaitForSeconds (0.5f);
 		Application.LoadLevel(Application.loadedLevel);
 	}
 	
