@@ -3,7 +3,6 @@ using System.Collections;
 using System.IO.Ports;
 public class ArduinoAccel : MonoBehaviour {
 
-
 	public static string jump;
 
 	SerialPort stream = new SerialPort("COM3",9600);
@@ -14,8 +13,8 @@ public class ArduinoAccel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		stream.Open();
-		_sensitivity = 0.5f;
+		stream.Open ();
+		_sensitivity = 0.2f;
 	}
 	
 	// Update is called once per frame
@@ -30,7 +29,7 @@ public class ArduinoAccel : MonoBehaviour {
 			vec3 = value.Split(',');
 			float X = float.Parse(vec3[0]);
 			float Z = float.Parse(vec3[1]);
-			target = Quaternion.Euler((X * -1) * _sensitivity, 0,(Z*-1) * _sensitivity);
+			target = Quaternion.Euler((X * -1) * _sensitivity , 0,(Z * -1) * _sensitivity);
 			transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
 			
 			if(float.Parse(vec3[2]) == 1){
@@ -40,6 +39,7 @@ public class ArduinoAccel : MonoBehaviour {
 			}
 		}
 	}
+
 
 	void OnGUI(){
 		GUI.Label(new Rect(170,570,60,20), jump);

@@ -4,19 +4,17 @@ using System.Collections;
 public class ColliderFunctions : MonoBehaviour {
 
 	public string _ObjectTag;
+	private GameObject caixa;
 
 
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+		caixa = GameObject.Find ("Caixa");
 	
 	}
 
-	IEnumerator Espere(){
+
+	private IEnumerator Espere(){
 		yield return new WaitForSeconds (0.5f);
 		Application.LoadLevel(Application.loadedLevel);
 	}

@@ -28,12 +28,13 @@ void setup(){
 void loop(){
  
   Serial.flush(); //Empty the memory each time in the loop
-  //Serial.print(map(analogRead(x),278,417,-90,90));
+  
   Serial.print(accelero.getXAccel());
   Serial.print(",");
+  
   Serial.print(accelero.getYAccel());
-  //Serial.print(map(analogRead(y),278,417,-90,90));
   Serial.print(",");
+  
   zaxis = map(analogRead(z),270,402,0,1000);
   
   if(zaxis < 800 || zaxis > 1200){Serial.print(1);}
