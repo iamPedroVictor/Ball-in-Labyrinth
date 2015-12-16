@@ -31,18 +31,9 @@ public class ArduinoAccel : MonoBehaviour {
 			float Z = float.Parse(vec3[1]);
 			target = Quaternion.Euler((X * -1) * _sensitivity , 0,(Z * -1) * _sensitivity);
 			transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
-			
-			if(float.Parse(vec3[2]) == 1){
-				Debug.Log ("jump");
-			}else if(float.Parse(vec3[2]) == 0){
-				jump = "";
-			}
 		}
 	}
 
 
-	void OnGUI(){
-		GUI.Label(new Rect(170,570,60,20), jump);
-	}
 }
 
