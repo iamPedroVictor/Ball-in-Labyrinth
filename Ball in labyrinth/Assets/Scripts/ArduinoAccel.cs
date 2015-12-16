@@ -5,9 +5,14 @@ public class ArduinoAccel : MonoBehaviour {
 
 	public static string jump;
 
+	private bool inicio = false;
+
 	SerialPort stream = new SerialPort("COM3",9600);
 
 	private float _sensitivity;
+
+	public Transform caixaRef;
+	
 
 	private Quaternion target;
 
@@ -16,22 +21,40 @@ public class ArduinoAccel : MonoBehaviour {
 		stream.Open ();
 		_sensitivity = 0.2f;
 	}
-	
+
+	private bool inicioOk(){
+		string value = stream.ReadLine();
+		if (value == "OK") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private Quaternion anguloTarget(string valueString){
+		string[] vec3 = valueString.Split (',');
+		float x = float.Parse (vec3 [0]);
+		float z = float.Parse (vec3 [1]);
+
+		Quaternion targetTemp = Quaternion.Euler ((x) * _sensitivity, 0, (z) * _sensitivity);
+		return targetTemp;
+
+	}
+
+	private Quaternion targetUpdate(){
+		return Quaternion.Slerp (transform.rotation, target, Time.deltaTime * 2f);
+	}
+
 	// Update is called once per frame
 	void Update () {
-		string value = stream.ReadLine();
-		if(value == "OK"){
-			value = stream.ReadLine();
+		if (inicio) {
+			string value = stream.ReadLine();
+			target = anguloTarget(value);
+			caixaRef.rotation = targetUpdate();
+		} else {
+			inicio = inicioOk();
 		}
-		string[] vec3 = value.Split(',');
-		if(vec3.Length == 3){
-			value = stream.ReadLine();
-			vec3 = value.Split(',');
-			float X = float.Parse(vec3[0]);
-			float Z = float.Parse(vec3[1]);
-			target = Quaternion.Euler((X * -1) * _sensitivity , 0,(Z * -1) * _sensitivity);
-			transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
-		}
+
 	}
 
 

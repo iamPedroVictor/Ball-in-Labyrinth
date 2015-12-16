@@ -6,6 +6,11 @@ AcceleroMMA7361 accelero;
 int x = 0;
 int y = 1;
 int z = 2;
+
+int mapx = 0;
+int mapy = 0;
+int mapz = 0;
+
 int calX = 18;
 int calY = 14;
 int zaxis;
@@ -27,9 +32,10 @@ void setup(){
 
 void loop(){
  
-  Serial.flush(); //Empty the memory each time in the loop
+ // Serial.flush(); //Empty the memory each time in the loop
   
-  Serial.print(accelero.getXAccel());
+  mapx = accelero.getXAccel();
+  Serial.print(mapx);
   Serial.print(",");
   
   Serial.print(accelero.getYAccel());
